@@ -5,19 +5,14 @@ if (!defined('ABSPATH')) {
 
 function get_island_users()
 {
-
     global $wpdb, $table_prefix;
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_users"));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function add_island_user(WP_REST_Request $request)
 {
-
     $island_user_name = (string)$request['name'];
 
     global $wpdb, $table_prefix;
@@ -31,15 +26,11 @@ function add_island_user(WP_REST_Request $request)
 
     generateItems($last_id);
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function delete_island_user(WP_REST_Request $request)
 {
-
     $island_user_id = (int)$request['id'];
 
     global $wpdb, $table_prefix;
@@ -47,15 +38,11 @@ function delete_island_user(WP_REST_Request $request)
         'id' => $island_user_id,
     ));
 
-    return $object = array(
-        'code' => 200,
-        'result' => "DELETED"
-    );
+    return returnResult('DELETED');
 }
 
 function edit_island_user(WP_REST_Request $request)
 {
-
     $island_user_id = (int)$request['id'];
     $island_user_name = (string)$request['name'];
 
@@ -68,10 +55,7 @@ function edit_island_user(WP_REST_Request $request)
 
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_users WHERE id = " . $island_user_id . " ORDER BY id "));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function get_island_user(WP_REST_Request $request)
@@ -86,33 +70,24 @@ function get_island_user(WP_REST_Request $request)
    " . $table_prefix . "island_users.id INNER JOIN " . $table_prefix . "island_items ON " . $table_prefix . "island_items.id = 
    " . $table_prefix . "island_user_items.id_item WHERE " . $table_prefix . "island_users.id = " . $id_user));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result,
-        'items' => $items
-    );
+    return returnResult($result, $items);
 }
 
 function get_island_items()
 {
-
     global $wpdb, $table_prefix;
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_items"));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function add_island_item(WP_REST_Request $request)
 {
-
     $island_item_name = (string)$request['name'];
     $island_item_value = (int)$request['value'];
 
     global $wpdb, $table_prefix;
-    $result = $wpdb->insert($table_prefix . "island_items", array(
+    $wpdb->insert($table_prefix . "island_items", array(
         'name' => addslashes($island_item_name),
         'value' => $island_item_value,
     ));
@@ -121,10 +96,7 @@ function add_island_item(WP_REST_Request $request)
 
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_items WHERE id = " . $last_id . " ORDER BY id "));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function get_island_item(WP_REST_Request $request)
@@ -134,26 +106,19 @@ function get_island_item(WP_REST_Request $request)
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_items
         WHERE id = " . $id_item));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function delete_island_item(WP_REST_Request $request)
 {
-
     $island_item_id = (int)$request['id'];
 
     global $wpdb, $table_prefix;
-    $result = $wpdb->delete($table_prefix . "island_items", array(
+    $wpdb->delete($table_prefix . "island_items", array(
         'id' => $island_item_id,
     ));
 
-    return $object = array(
-        'code' => 200,
-        'result' => "DELETED"
-    );
+    return returnResult('DELETED');
 }
 
 function add_island_lot(WP_REST_Request $request)
@@ -165,24 +130,15 @@ function add_island_lot(WP_REST_Request $request)
     $island_consumer_items = (string)$request['consumer_items'];
 
     if ($island_creator_id === $island_consumer_id || $island_creator_id === 0) {
-        return $object = array(
-            'code' => 200,
-            'result' => "Check consumer_id and creator_id"
-        );
+        return returnResult("Check consumer_id and creator_id", 422);
     }
 
     if (!checkUser($island_creator_id)) {
-        return $object = array(
-            'code' => 200,
-            'result' => "User " . $island_creator_id . " doesn't exist"
-        );
+        return returnResult("User " . $island_creator_id . " doesn't exist", 422);
     }
     if ($island_consumer_id != 0) {
         if (!checkUser($island_consumer_id)) {
-            return $object = array(
-                'code' => 200,
-                'result' => "User " . $island_creator_id . " doesn't exist"
-            );
+            return returnResult("User " . $island_creator_id . " doesn't exist", 422);
         }
     }
 
@@ -190,33 +146,21 @@ function add_island_lot(WP_REST_Request $request)
     $island_consumer_items = json_decode($island_consumer_items);
 
     if (!checkUserItems($island_creator_id, $island_creator_items)) {
-        return $object = array(
-            'code' => 200,
-            'result' => "Check creator items, please"
-        );
+        return returnResult("Check creator items, please", 422);
     }
 
     if ($island_consumer_id != 0) {
         if (!checkUserItems($island_creator_id, $island_consumer_items)) {
-            return $object = array(
-                'code' => 200,
-                'result' => "Check consumer items, please"
-            );
+            return returnResult("Check consumer items, please", 422);
         }
     } else {
         if (!checkTotal($island_consumer_items)) {
-            return $object = array(
-                'code' => 200,
-                'result' => "Check consumer items, please"
-            );
+            return returnResult("Check consumer items, please", 422);
         }
     }
 
     if ($island_creator_items->total < $island_consumer_items->total) {
-        return $object = array(
-            'code' => 200,
-            'result' => "your total amount is less than needed"
-        );
+        return returnResult("your total amount is less than needed", 422);
     }
 
     $result = $wpdb->insert($table_prefix . "island_lots", array(
@@ -231,10 +175,7 @@ function add_island_lot(WP_REST_Request $request)
 
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_lots WHERE id = " . $last_id . " ORDER BY id "));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function get_island_available_lots()
@@ -243,11 +184,7 @@ function get_island_available_lots()
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_lots
         WHERE consumer_id = 0"));
 
-
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function get_island_own_lots(WP_REST_Request $request)
@@ -258,10 +195,7 @@ function get_island_own_lots(WP_REST_Request $request)
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_lots
         WHERE creator_id =" . $id_item));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function get_island_consumer_lots(WP_REST_Request $request)
@@ -272,10 +206,7 @@ function get_island_consumer_lots(WP_REST_Request $request)
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_lots
         WHERE consumer_id =" . $id_item));
 
-    return $object = array(
-        'code' => 200,
-        'result' => $result
-    );
+    return returnResult($result);
 }
 
 function accept_public_island_lot(WP_REST_Request $request)
@@ -287,11 +218,8 @@ function accept_public_island_lot(WP_REST_Request $request)
     $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_lots
         WHERE id =" . $lot_id . " and consumer_id = 0 and status = 'open'"));
 
-    if(!$result) {
-        return $object = array(
-            'code' => 200,
-            'result' => "no public deals"
-        );
+    if (!$result) {
+        return returnResult("no public deals", 422);
     }
 
     $lot_items = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $table_prefix . "island_lots WHERE id = " . $lot_id . " ORDER BY id "));
@@ -336,17 +264,11 @@ function extracted($result, $consumer_id, $island_consumer_items, $creator_id, $
 {
     if (!empty($result)) {
         if (!checkUser($consumer_id) || !checkUserItems($consumer_id, $island_consumer_items)) {
-            return $object = array(
-                'code' => 200,
-                'result' => "please check consumer items"
-            );
+            return returnResult("please check consumer items", 422);
         }
 
         if (!checkUser($creator_id) || !checkUserItems($creator_id, $island_creator_items)) {
-            return $object = array(
-                'code' => 200,
-                'result' => "please check creator items"
-            );
+            return returnResult("please check creator items", 422);
         }
     }
 
@@ -386,8 +308,5 @@ function extracted($result, $consumer_id, $island_consumer_items, $creator_id, $
         'id' => $lot_id
     ));
 
-    return $object = array(
-        'code' => 200,
-        'result' => "deal is successful"
-    );
+    return returnResult("deal is successful");
 }
