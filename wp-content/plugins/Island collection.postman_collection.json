@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "15f806d5-9306-4ddc-969e-90450e847657",
+		"name": "Island collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get_island_users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/get-island-users/",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/get-island-users/"
+						}
+					]
+				},
+				"description": "getting all the islanders"
+			},
+			"response": []
+		},
+		{
+			"name": "get_island_items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/get-island-items/",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/get-island-items/"
+						}
+					]
+				},
+				"description": "getting all items of trade"
+			},
+			"response": []
+		},
+		{
+			"name": "add_island_user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "User with items\n",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/add-island-user/",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/add-island-user/"
+						}
+					]
+				},
+				"description": "adding an islander (items will be automatically generated)"
+			},
+			"response": []
+		},
+		{
+			"name": "edit_island_user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "new name",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/edit-island-user/3",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/edit-island-user/3"
+						}
+					]
+				},
+				"description": "edit the name of the resident (pass the id and the new name)"
+			},
+			"response": []
+		},
+		{
+			"name": "delete_island_user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/delete-island-user/3",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/delete-island-user/3"
+						}
+					]
+				},
+				"description": "deleting a resident (passing his id)"
+			},
+			"response": []
+		},
+		{
+			"name": "delete_island_item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/delete-island-item/2",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/delete-island-item/2"
+						}
+					]
+				},
+				"description": "delete the item (pass its id)"
+			},
+			"response": []
+		},
+		{
+			"name": "add_island_item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Water",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/add-island-item/",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/add-island-item/"
+						}
+					]
+				},
+				"description": "Add an item (pass the name and number of points)"
+			},
+			"response": []
+		},
+		{
+			"name": "add_island_lot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "creator_id",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "consumer_id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "creator_items",
+							"value": "{\"items\":\n[\"BE developer\"], \n\"total\":10}",
+							"type": "text"
+						},
+						{
+							"key": "consumer_items",
+							"value": "{\"items\":\n[\"Soup\"], \n\"total\":8}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/add-island-lot/",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/add-island-lot/"
+						}
+					]
+				},
+				"description": "Add a lot, pass the id of the lot creator, what he wants to give and what he wants to get (the consumer_id field can be empty if a public transaction is created)"
+			},
+			"response": []
+		},
+		{
+			"name": "accept_island_public_lot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "lot_id",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "consumer_id",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/accept-public-island-lot/",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/accept-public-island-lot/"
+						}
+					]
+				},
+				"description": "accepting a public lot (pass the id of the lot, the id of the resident who wants to exchange)"
+			},
+			"response": []
+		},
+		{
+			"name": "accept_island_private_lot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "lot_id",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/accept-private-island-lot/",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/accept-private-island-lot/"
+						}
+					]
+				},
+				"description": "accepting a public lot (pass the id of the lot)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/get-island-user/1",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/get-island-user/1"
+						}
+					]
+				},
+				"description": "getting a resident of the island (passing his id)"
+			},
+			"response": []
+		},
+		{
+			"name": "get_island_available_lots",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/get-island-available-lots/",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/get-island-available-lots/"
+						}
+					]
+				},
+				"description": "getting a resident of the island (passing his id)"
+			},
+			"response": []
+		},
+		{
+			"name": "get_island_own_lots",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/get-island-own-lots/5",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/get-island-own-lots/5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_island_consumer_lots",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/get-island-consumer-lots/6",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/get-island-consumer-lots/6"
+						}
+					]
+				},
+				"description": "getting a private lot for a resident (passing the resident's id)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://wp.host/?rest_route=/island/v1/get-island-item/3",
+					"protocol": "http",
+					"host": [
+						"wp",
+						"host"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "rest_route",
+							"value": "/island/v1/get-island-item/3"
+						}
+					]
+				},
+				"description": "getting information about item"
+			},
+			"response": []
+		}
+	]
+}
